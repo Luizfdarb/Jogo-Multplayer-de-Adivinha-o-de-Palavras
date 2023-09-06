@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jogo de Adivinhação de Palavras - Jogador</title>
+</head>
+<body>
+    <h1>Jogo de Adivinhação de Palavras</h1>
+    <h2>Você está jogando como Jogador X</h2>
+    <p id="mensagem"></p>
+    <p id="dica"></p>
+    <input type="text" id="palpite" placeholder="Digite seu palpite">
+    <button id="enviar">Enviar Palpite</button>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        const mensagemElement = document.getElementById('mensagem');
+        const dicaElement = document.getElementById('dica');
+        const palpiteElement = document.getElementById('palpite');
+        const enviarButton = document.getElementById('enviar');
+
+        // Quando o servidor envia uma mensagem de identificação
+        socket.on('mensagem', (mensagem) => {
+            mensagemElement.textContent = mensagem;
+        });
+
+        // Quando o servidor envia uma dica
+        socket.on('dica', (dica) => {
+            dicaElement.textContent = `Dica: ${dica}`;
+        });
+
+        // Quando o jogador acerta a palavra
+        socket.on('parabens', (mensagem) => {
+            mensagemElement.textContent = mensagem;
+            palpiteElement.disabled = true;
+            enviarButton.disabled = true;
+        });
+
+        // Quando o jogador faz um palpite errado
+        socket.on('tentativaErrada', (mensagem) => {
+            mensagemElement.textContent = mensagem;
+        });
+
+        // Quando o jogador envia um palpite
+        enviarButton.addEventListener('click', () => {
+            const palpite = palpiteElement.value;
+            socket.emit('palpite', palpite);
+        });
+    </script>
+</body>
+</html>

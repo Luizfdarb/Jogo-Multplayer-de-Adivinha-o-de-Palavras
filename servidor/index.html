@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tela Inicial</title>
+</head>
+<body>
+    <h1>Bem-vindo ao Jogo de Adivinhação de Palavras</h1>
+    <button onclick="jogarSozinho()">Jogar Sozinho</button>
+    <button onclick="jogarMultiplayer()">Jogar Multiplayer</button>
+
+    <script>
+        function jogarSozinho() {
+            window.location.href = 'jogo.html?modo=sozinho'; // Redirecionar para o modo "Sozinho"
+        }
+
+        function jogarMultiplayer() {
+            window.location.href = 'jogo.html?modo=multiplayer'; // Redirecionar para o modo "Multiplayer"
+        }
+    </script>
+</body>
+</html>
